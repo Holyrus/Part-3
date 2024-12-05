@@ -32,22 +32,29 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 const generateId = () => {
-    const maxId = persons.length > 0 ? Math.max(...notes.map(note => Number(note.id))) : 0;
+    const maxId = persons.length > 0 ? Math.max(...persons.map(person => Number(person.id))) : 0;
     return String(maxId + 1);
 }
 
 app.post('/api/persons', (request, response) => {
     const body = request.body;
 
-    if (!body.content) {
+    console.log(body)
+
+    if (!body.name) {
         return response.status(400).json({
-            error: 'content missing'
+            error: 'Name missing'
+        })
+    } else if (!body.number) {
+        return response.status(400).json({
+            error: 'Number missing'
         })
     }
 
     const person = {
-        "id": generateId(),
-        "name": body.content,
+        id: generateId(),
+        name: body.name,
+        number: body.number
     }
 
     persons = persons.concat(person);
