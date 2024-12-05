@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 
 app.use(express.json());
 
+morgan.token('body', (request) => {
+    return JSON.stringify(request.body);
+})
+
+app.use(
+    morgan(':method :url :status :res[content-length] - :response-time ms :body')
+)
 
 app.get('/api/persons', (request, response) => {
     response.json(persons);
