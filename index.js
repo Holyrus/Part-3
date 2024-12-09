@@ -12,6 +12,16 @@ app.use(
     morgan(':method :url :status :res[content-length] - :response-time ms :body')
 )
 
+const cors = require('cors')
+
+const corsOptions = {
+    origin: ["http://localhost:5173"],
+}
+
+app.use(cors(corsOptions));
+
+app.use(express.static('dist'));
+
 app.get('/api/persons', (request, response) => {
     response.json(persons);
 })
@@ -94,7 +104,7 @@ let persons = [
     }
 ]
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
