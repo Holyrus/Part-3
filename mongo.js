@@ -45,3 +45,5 @@ if (process.argv.length === 5) {
 
 }
 
+// node mongo.js <password> -> listing all docs in database
+// node mongo.js <password> "Umka Milipopovich" 2938441441 -> Creating new doc in database
