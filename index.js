@@ -46,11 +46,13 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 // Figuring out how many document in database
 
-const uri = process.env.MONGODB_URI;
-
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
     let currentTime = new Date().toString();
-    response.send(`<p>Phonebook has info ? for people</p> <p>${currentTime}</p>`)
+    Person.countDocuments({})
+    .then(persons => {
+        response.send(`<p>Phonebook has info for ${persons} people</p> <p>${currentTime}</p>`)
+    })
+    .catch(error => next(error))
 })
 
 // ------------------------------------------
